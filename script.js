@@ -63,15 +63,6 @@ function main() {
 
 	levelButtons[0].onclick = levelButton('level1');
 
-
-
-	// Level.generate(levels.level1);
-
-	// document.onkeydown = keyInputDown;
-	// document.onkeyup = keyInputUp;
-
-	// window.requestAnimationFrame(Level.mainloop);
-
 }
 
 // I feel like I could've done this simpler, but this works
@@ -313,10 +304,6 @@ class GameObject extends Component {
 	update() { // OBSOLETE
 
 		throw 'Obsolete';
-
-		for(let i = 0; i < this.events.length; i++) {
-			this.events[i]()
-		}
 	}
 
 	getComponent(componentName) {
@@ -367,7 +354,6 @@ class Physical extends Component {
 	}
 
 	set() {
-		//this.velocity.y = .1;
 	}
 
 	resetX(self) {
@@ -409,55 +395,14 @@ class Physical extends Component {
 
 	accelerateX(accelX) {
 		let tempV = accelX + this.velocity.x;
-		//this.velocity.x = valueCap(-this.velocityConstraint.x, this.velocityConstraint.x, tempV);
 		this.velocity.x = tempV;
 	}
 
 	accelerateY(accelY) {
 
 		let tempV = accelY + this.velocity.y;
-		//this.velocity.y = valueCap(-this.velocityConstraint.y, this.velocityConstraint.y, tempV);
 		this.velocity.y = tempV;
 	}
-
-
-	/*accelerateX(x) {
-
-		let tempV = Physical.GravityVector.x * this.gravityCoefficient.x + this.velocity.x;
-
-		if(tempV > 0 && tempV > this.velocityConstraint.x) {
-
-			tempV = this.velocityConstraint.x;
-
-		}
-		else if(tempV < 0 && tempV < this.velocityConstraint.x) {
-
-			tempV = this.velocityConstraint.x;
-
-		}
-
-		this.velocity.x = tempV;
-
-	}
-
-	accelerateY(y) {
-
-		let tempV = Physical.GravityVector.x * this.gravityCoefficient.x + this.velocity.x;
-
-		if(tempV > 0 && tempV > this.velocityConstraint.x) {
-
-			tempV = this.velocityConstraint.x;
-
-		}
-		else if(tempV < 0 && tempV < this.velocityConstraint.x) {
-
-			tempV = this.velocityConstraint.x;
-
-		}
-
-		this.velocity.x = tempV;
-
-	}*/
 
 	gravitate() {
 
@@ -597,21 +542,6 @@ class Collider extends Component {
 			collidersToCheck.splice(0,1);
 
 		}
-
-		// for(let i = 0; i < Collider.colliderList.length; i++) {
-
-		// 	collidersToCheck.splice(0,0);
-
-		// 	for(let g = 0; g < collidersToCheck.length; g++) {
-		// 		if(
-		// 			!(CollisionLayers[Collider.colliderList[i].collisionLayer].ignore.includes(collidersToCheck[g].collisionLayer))
-		// 			&& !(CollisionLayers[collidersToCheck[g].collisionLayer].ignore.includes(Collider.colliderList[i].collisionLayer))) {
-		// 			Collider.checkIntersect(Collider.colliderList[i],collidersToCheck[g]);
-		// 		}
-		// 	}
-
-		// }
-
 	}
 
 	static adjustCollisions() {
@@ -675,14 +605,6 @@ class Collider extends Component {
 				}
 
 				let difference = a.transform.position.subtract(b.transform.position, true);
-
-				// Gizmo.gizmosList.push(
-				// 	{
-				// 		'pos': new Vector2(difference.x / 2 + b.transform.position.x, difference.y / 2 + b.transform.position.y),
-				// 		'scale': new Vector2(adjustmentVector.x / 2, adjustmentVector.y / 2),
-				// 		'color':'pink'
-				// 	}
-				// )
 
 				a.transform.translate(adjustmentVector);
 
@@ -808,9 +730,6 @@ class Gizmo {
 		CONT.fillStyle = color;
 		CONT.beginPath();
 
-		//scale.x = side x
-		//scale.y = side y
-
 		CONT.moveTo(pos.x - (scale.x/2), pos.y - (scale.y/2));
 		CONT.lineTo(pos.x - (scale.x/2), pos.y + (scale.y/2));
 		CONT.lineTo(pos.x + (scale.x/2), pos.y + (scale.y/2));
@@ -818,8 +737,6 @@ class Gizmo {
 		CONT.lineTo(pos.x - (scale.x/2), pos.y - (scale.y/2));
 		CONT.closePath();
 		CONT.fill();
-
-		// LOG('GIZMOS!');
 	}
 
 	static drawGizmosList() {
@@ -841,10 +758,6 @@ class Canvas { // deals with displaying objects
 
 		CANV.width = width;
 		CANV.height = height;
-
-
-		// this.canvas.style.width=(CANV.width*2)+'px';
-		// this.canvas.style.height=(CANV.height*2)+'px';
 	}
 
 }
@@ -1220,25 +1133,9 @@ class Controller extends Component {
 				self.grounded = false;
 				self.currentJumpTime = 0;
 			}
-			//`.log('uh');
-			//`.log('up');
-			//let preY = self.rb.velocity.y
-			//self.rb.accelerateY(self.jumpForce * Level.time.deltaTime);
 			let temp = Physical.GravityVector.neg().norm().multiply(self.jumpForce * Level.time.deltaTime);
-			//console.log(temp);
 			self.rb.accelerate(temp);
 			self.currentJumpTime += Level.time.deltaTime;
-
-			//`.log(self.rb.velocity.y);
-			/*self.jumping = true;
-			self.grounded = false;*/
-
-
-			//velocity added
-
-			// `.log(preY, self.rb.velocity.y);
-
-			//keyForceUp('w');
 		}
 		else if(self.jumping) {
 			self.jumping = false;
@@ -1319,17 +1216,11 @@ class Platform extends Component {
 
 	calculateStep() {
 
-		// this.nextPointIndex++;
-		// if(this.nextPointIndex >= this.points.length) {
-		// 	this.nextPointIndex = 0;
-		// }
-
 		this.currentStep = this.difference.divide(this.timeToPoints[this.nextPointIndex]);
 
 	}
 
 	physicsPreUpdate(self) {
-		//console.log(self.transform.position);
 
 		if(self.difference.magnitude < .005) {
 			self.nextPointIndex++;
