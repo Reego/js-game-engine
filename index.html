@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Platformer</title>
+	<style>
+		html,body {
+			margin:auto;
+			background-color:black;
+		}
+
+		.screen {
+			position: absolute;
+			background-color:black;
+			color:white;
+		}
+
+		#gameover {
+			display:none;
+		}
+
+		#win {
+			display:none;
+		}
+
+		.screen p {
+			text-align: center;
+			margin-top:50px;
+		}
+		.level-button {
+			width:200px;
+			height:50px;
+			border-radius: 2px;
+			margin-top:10px;
+			line-height: 50px;
+			background-color:red;
+			text-align:center;
+			margin-left:auto;margin-right:auto;
+		}
+		.level-button:hover {
+			cursor: pointer;
+			background-color:white;
+			color:black;
+		}
+
+		#canvas {
+			background-color:white;
+		}
+	</style>
+	<script src='script.js'></script>
+</head>
+<body>
+	<div class="screen" id="gameover">
+		<p>Game Over.</p>
+		<br/>
+		<p>Reload the page to restart.</p>
+	</div>
+	<div class="screen" id="win">
+		<p>Good Job!</p>
+		<br/>
+		<p>You passed the sample level. Refresh the page if you wish to play again.</p>
+	</div>
+	<div class="screen" id="level-select">
+		<p>RDGE Sample Gravity Shifter Game</p>
+		<br/>
+		<div class="level-button">Test Level</div>
+		<p>With RDGE, more complex JS games can be created with fewer lines of code. Although the engine is very much a work in progress and requires much more extensibility to compete with the likes of professional game engines, it presents a small example of what HTML5 and JavaScript is capable of in your own web browser.</p>
+		<p>For this sample game, use the keys, "W", "A", "D", to control the green square. Touch the small blue squares to shift the direction of gravity and reach the golden square to beat the level. Try not to fall off the map.</p>
+	</div>
+	<canvas id='canvas' width="600" height="600" onkeypress="keyInput"></canvas>
+	<p id='logger' style="color:white"></p>
+
+</body>
+</html>
